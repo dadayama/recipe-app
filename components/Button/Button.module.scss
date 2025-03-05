@@ -1,0 +1,20 @@
+.button {
+  width: 200px;
+  padding: 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  border: 1px solid;
+  display: block;
+  text-align: center;
+  transition: 0.3s;
+  &:hover {
+    opacity: 0.6;
+  }
+}
+
+.orange {
+  background: orange;
+  color: #fff;
+  border-color: transparent;
+}
