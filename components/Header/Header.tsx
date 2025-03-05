@@ -1,21 +1,18 @@
-import Link from 'next/link';
-import styles from '@/components/Header/Header.module.scss';
+import { AppBar, Toolbar, Typography, Button } from '@mui/material';
 
 const Header = () => {
   return (
     <header>
-      <div className={styles.inner}>
-        <nav>
-          <ul className={styles.list}>
-            <li className={styles.listItem}>
-              <Link href='/'>ホーム</Link>
-            </li>
-            <li>
-              <Link href='/recipe'>レシピ一覧</Link>
-            </li>
-          </ul>
-        </nav>
-      </div>
+      <AppBar position='sticky'>
+        <Toolbar>
+          <Typography variant='h6' sx={{ flexGrow: 1 }}>
+            My Website
+          </Typography>
+          <Button color='inherit'>Home</Button>
+          <Button color='inherit'>About</Button>
+          <Button color='inherit'>Contact</Button>
+        </Toolbar>
+      </AppBar>
     </header>
   );
 };
