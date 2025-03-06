@@ -1,0 +1,10 @@
+.inner {
+  padding: 20px;
+}
+.list {
+  display: flex;
+  gap: 20px;
+}
+.listItem {
+  font-size: var(--font-m);
+}
