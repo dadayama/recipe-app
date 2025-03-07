@@ -13,7 +13,7 @@ const RecipeList = ({ title, posts }: Props) => {
       <section>
         <h2>{title}</h2>
         <ul>
-          {posts?.map((post: any) => (
+          {posts?.map((post) => (
             <li key={post.id}>
               <Link href={`recipe/${post.id}`}>
                 <h3>{post.title}</h3>
@@ -25,7 +25,7 @@ const RecipeList = ({ title, posts }: Props) => {
                     alt='仮のalt'
                   />
                 </div>
-                <p>{posts.comments}</p>
+                <p>{post.comments}</p>
                 <p>材料：{post.ingredients}</p>
               </Link>
             </li>
