@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { onAuthStateChanged, User } from 'firebase/auth';
-import { auth } from '@/lib/firebase';
+import { auth } from '@/lib/firebaseConfig';
 
 type AuthState = {
   user: User | null;

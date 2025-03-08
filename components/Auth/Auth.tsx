@@ -5,7 +5,7 @@ import {
   createUserWithEmailAndPassword,
 } from 'firebase/auth';
 import { useAuthStore } from '@/store/authStore';
-import { auth } from '@/lib/firebase';
+import { auth } from '@/lib/firebaseConfig';
 
 const Auth = () => {
   const [email, setEmail] = useState('');

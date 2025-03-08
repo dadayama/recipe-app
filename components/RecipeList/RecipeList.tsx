@@ -4,7 +4,6 @@ import React from 'react';
 import RecipeCard from '../RecipeCard/RecipeCard';
 
 type Props = {
-  title: 'string';
   posts: any;
 };
 
@@ -12,9 +11,11 @@ const RecipeList = ({ posts }: Props) => {
   return (
     <>
       <ul>
-        {posts?.map((post) => (
-          <RecipeCard post={post} />
-        ))}
+        {posts && posts.length > 0 ? (
+          posts.map((post) => <RecipeCard key={post.id} post={post} />)
+        ) : (
+          <p>レシピがありません</p>
+        )}
       </ul>
     </>
   );
