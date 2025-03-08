@@ -7,7 +7,7 @@ export async function getAllRecipes() {
   try {
     const querySnapshot = await getDocs(collection(db, 'recipes'));
     console.log('-------------');
-    console.log(querySnapshot);
+    console.log(querySnapshot.docs);
     console.log('-------------');
 
     // ドキュメントが存在する場合、取得したデータを配列に変換

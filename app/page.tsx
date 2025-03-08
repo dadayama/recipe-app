@@ -13,11 +13,9 @@ const Home = async () => {
   console.log(res);
 
   const data = await res.json();
-  console.log(data);
+  console.log('data', data);
 
-  const posts = data.recipeList;
-
-  return <RecipeList posts={posts} />;
+  return <RecipeList posts={data} />;
 };
 
 export default Home;

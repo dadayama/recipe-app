@@ -8,6 +8,8 @@ type Props = {
 };
 
 const RecipeList = ({ posts }: Props) => {
+  console.log('レシピリスト', posts);
+
   return (
     <>
       <ul>
