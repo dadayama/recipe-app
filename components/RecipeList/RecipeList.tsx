@@ -1,20 +1,15 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import React from 'react';
+import { RecipeListProps, RecipePost } from '@/types/recipe';
 import RecipeCard from '../RecipeCard/RecipeCard';
 
-type Props = {
-  posts: any;
-};
-
-const RecipeList = ({ posts }: Props) => {
-  console.log('レシピリスト', posts);
-
+const RecipeList = ({ posts }: RecipeListProps) => {
   return (
     <>
       <ul>
         {posts && posts.length > 0 ? (
-          posts.map((post) => <RecipeCard key={post.id} post={post} />)
+          posts.map((post) => {
+            console.log(post); // ここで post の内容を確認
+            return <RecipeCard key={post.id} post={post} />;
+          })
         ) : (
           <p>レシピがありません</p>
         )}

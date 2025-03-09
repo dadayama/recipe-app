@@ -1,25 +1,19 @@
+import { RecipePost } from '@/types/recipe';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-const RecipeCard = (post) => {
-  console.log('post', post.post.img);
-
+const RecipeCard = ({ post }: { post: RecipePost }) => {
+  const { id, title, img, comments, ingredients } = post;
   return (
-    <li key={post.id}>
-      <Link href={`recipe/${post.post.id}`}>
-        <h3>{post.post.title}</h3>
+    <li key={id}>
+      <Link href={`recipe/${id}`}>
+        <h3>{title}</h3>
         <div>
-          {/* <img src={post.post.img || null} alt='Description' /> */}
-          <Image
-            src={post.post.img || null}
-            alt='Description'
-            width={300}
-            height={200}
-          />
+          <Image src={img} width={300} height={200} alt='' />
         </div>
-        <p>{post.post.comments}</p>
-        <p>材料：{post.post.ingredients}</p>
+        <p>{comments}</p>
+        <p>材料：{ingredients}</p>
       </Link>
     </li>
   );
