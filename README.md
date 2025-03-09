@@ -17,33 +17,34 @@
 | TypeScript | 型安全な開発 |
 
 ## フォルダ構成
-      📦 recipe-app
-      ├── 📂 app
-      │   ├── 📂 recipe (レシピ詳細ページ)
-      │   ├── 📜 page.tsx (トップページ)
-      ├── 📂 components
-      │   ├── 📜 RecipeList.tsx (レシピ一覧コンポーネント)
-      │   ├── 📜 RecipeCard.tsx (レシピカードコンポーネント)
-      ├── 📂 types
-      │   ├── 📜 recipe.ts (型定義)
-      ├── 📂 public
-      │   ├── 📜 images (画像フォルダ)
-      ├── 📜 next.config.js
-      ├── 📜 package.json
-      └── 📜 README.md`
+     recipe-app
+      ├── app
+      │   ├── recipe (レシピ詳細ページ)
+      │   ├── page.tsx (トップページ)
+      ├── components
+      │   ├── RecipeList.tsx (レシピ一覧コンポーネント)
+      │   ├── RecipeCard.tsx (レシピカードコンポーネント)
+      ├── types
+      │   ├── recipe.ts (型定義)
+      ├── public
+      │   ├── images (画像フォルダ)
+      ├── next.config.js
+      ├── package.json
+      └── README.md
+
 
 ## セットアップ
 1. **リポジトリをクローン**
 
    ```bash
-   git clone https://github.com/your-repo/recipe-app.git
+   git clone https://github.com/dadayama/recipe-app.git
    cd recipe-app
 
 2. **環境変数を設定**
 .env.local を作成して以下の値を設定
 このプロジェクトでは、以下の環境変数を使用します。`.env.local` ファイルを作成し、必要な値を設定してください。
 
-- `NEXT_PUBLIC_FIREBASE_API_KEY
+- `NEXT_PUBLIC_FIREBASE_API_KEY`
 - `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN`
 - `NEXT_PUBLIC_FIREBASE_PROJECT_ID`
 - `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET`
