@@ -7,7 +7,6 @@ const RecipeList = ({ posts }: RecipeListProps) => {
       <ul>
         {posts && posts.length > 0 ? (
           posts.map((post) => {
-            console.log(post); // ここで post の内容を確認
             return <RecipeCard key={post.id} post={post} />;
           })
         ) : (

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import styles from '@/components/Header/Header.module.scss'
+import styles from '@/components/Header/Header.module.scss';
 
 const Header = () => {
   return (
@@ -11,7 +11,7 @@ const Header = () => {
               <Link href='/'>ホーム</Link>
             </li>
             <li>
-              <Link href='/recipe'>レシピ一覧</Link>
+              <Link href='/recipes'>レシピ一覧</Link>
             </li>
           </ul>
         </nav>
