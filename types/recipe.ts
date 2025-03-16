@@ -1,9 +1,9 @@
 export type RecipePost = {
-  id: string;
+  id?: string;
   title: string;
   img: string;
   ingredients: string[];
-  instructions: string;
+  steps: string[];
   comments?: string;
   createdAt?: Date;
 };

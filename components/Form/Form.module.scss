@@ -1,0 +1,56 @@
+/*入力フォーム*/
+.formWrap {
+  margin-inline: auto;
+}
+.inputField {
+  width: 100%;
+  margin-top: var(--spacing-4);
+  margin-inline: auto;
+  input,
+  textarea {
+    display: block;
+    max-width: 500px;
+    border: 1px solid #333;
+    padding: 10px;
+    border-radius: var(--rounded-m);
+    margin-top: var(--spacing-1);
+  }
+}
+.fieldTitle {
+  font-size: 18px;
+  line-height: var(--line-150);
+  font-weight: bold;
+}
+.addBtn {
+  margin-top: var(--spacing-8);
+  text-align: center;
+  button {
+    width: 300px;
+    height: 50px;
+    border: 1px solid #333;
+    border-radius: var(--rounded-m);
+    font-size: var(--font-m);
+    cursor: pointer;
+  }
+}
+.stepAddBtn {
+  button {
+    background: #eee;
+    width: 200px;
+    padding: var(--spacing-1);
+    border-radius: var(--spacing-1);
+    margin-top: var(--spacing-1);
+    cursor: pointer;
+    font-size: var(--font-s);
+    font-weight: bold;
+  }
+}
+.stepsContent {
+  margin-top: var(--spacing-1);
+}
+.w100 {
+  width: 100px;
+}
+.w500 {
+  width: 100%;
+}
