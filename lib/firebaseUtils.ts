@@ -6,6 +6,8 @@ import {
 } from 'firebase/firestore';
 import { db } from './firebaseConfig';
 import { RecipePost } from '@/types/recipe';
+
+// レシピデータを取得する関数
 export async function getAllRecipes() {
   try {
     const querySnapshot = await getDocs(collection(db, 'recipes'));
@@ -23,7 +25,7 @@ export async function getAllRecipes() {
   }
 }
 
-// レシピを新しく追加する関数
+// レシピデータを新しく追加する関数
 export async function addRecipe({
   title,
   img,

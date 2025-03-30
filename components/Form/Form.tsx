@@ -8,7 +8,7 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { useRouter } from 'next/navigation';
 
 const Form = () => {
-  const [imgUrl, setImgUrl] = useState<string>('');
+  const [imgUrl, setImgUrl] = useState<string | null>(null);
   const [recipes, setRecipes] = useState<string>('');
   const [ingredients, setIngredients] = useState<string>('');
   const [steps, setSteps] = useState<string[]>([]);
@@ -84,7 +84,7 @@ const Form = () => {
             accept='.png ,.jpeg, .jpg'
             onChange={onFileUpload}
           />
-          <img src={imgUrl} />
+          <img src={imgUrl || undefined} />
         </div>
         <div className={styles.inputField}>
           <label htmlFor='recipe' className={styles.fieldTitle}>
