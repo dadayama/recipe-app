@@ -1,0 +1,36 @@
+/*----------------------------------------
+recipe card
+----------------------------------------*/
+.recipeItem {
+  a {
+    display: grid;
+    gap: 8px;
+    border: 1px solid var(--black);
+    border-radius: var(--rounded-m);
+    padding: 20px;
+    transition: 0.3s;
+    &:hover {
+      img {
+        transform: scale(1.1);
+      }
+    }
+  }
+}
+.recipeImg {
+  width: 100%;
+  aspect-ratio: 3/2;
+  overflow: hidden;
+  border-radius: 8px;
+  img {
+    transition: 0.3s;
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+  }
+}
+.recipeBody {
+  padding: 8px 0 0;
+  display: grid;
+  gap: var(--spacing-1);
+}
