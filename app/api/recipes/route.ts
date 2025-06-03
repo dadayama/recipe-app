@@ -1,3 +1,4 @@
+// GET リクエストの処理
 import { NextResponse } from 'next/server';
 import { getAllRecipes } from '@/lib/firebaseUtils';
 
