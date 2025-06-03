@@ -1,10 +1,20 @@
 /*入力フォーム*/
 .formWrap {
+  padding-inline: 80px;
+  padding-block: 80px;
   margin-inline: auto;
+  display: grid;
+  gap: 40px;
+  @media screen and (width < 768px) {
+    padding-inline: 24px;
+  }
+}
+.formInner {
+  display: grid;
+  gap: 40px;
 }
 .inputField {
   width: 100%;
-  margin-top: var(--spacing-4);
   margin-inline: auto;
   input,
   textarea {
@@ -53,4 +63,24 @@
 }
 .w500 {
   width: 100%;
+}
+.addButtonWrap {
+  button {
+    padding: 20px 20px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    border: 1px solid;
+    display: block;
+    text-align: center;
+    transition: 0.3s;
+    background: var(--accent);
+    line-height: 1;
+    font-size: var(--font-m);
+    color: #fff;
+    border-color: transparent;
+    &:hover {
+      opacity: 0.6;
+    }
+  }
 }
