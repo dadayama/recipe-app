@@ -13,6 +13,9 @@ const Header = () => {
             <li>
               <Link href='/recipes'>レシピ一覧</Link>
             </li>
+            <li>
+              <Link href='/new-recipe'>投稿する</Link>
+            </li>
           </ul>
         </nav>
       </div>

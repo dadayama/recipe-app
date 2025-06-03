@@ -9,9 +9,11 @@ const RecipeCard = ({ post }: { post: RecipePost }) => {
     <li key={id}>
       <Link href={`recipe/${id}`}>
         <h3>{title}</h3>
-        <div>
-          <Image src={img} width={300} height={200} alt='' />
-        </div>
+        {img && (
+          <div>
+            <Image src={img} width={300} height={200} alt={title} />
+          </div>
+        )}
         <p>{comments}</p>
         <p>材料：{ingredients}</p>
       </Link>
