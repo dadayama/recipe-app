@@ -1,27 +1,52 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
+    "module": "ESNext",
+    "target": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "preserve",
     "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"],
+      "@@/*": ["./*"]
+    },
+    "allowJs": true,
+    // import時にファイルパスの文字列で大文字小文字を区別するかどうか
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
     "noEmit": true,
     "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
     "incremental": true,
+    // --- 以下の2つのオプションはESLintに権限移譲するために明示的に false にする。重複を排除して、かつより細かにハンドリングすることが目的 ---
+    // 未使用のローカル変数を警告
+    "noUnusedLocals": false,
+    // 未使用の関数パラメータを警告
+    "noUnusedParameters": false,
+    // Astroが自動で変更。JSX/TSXファイルにて自動でReactモジュールがインポートされるようにする
+    "jsxImportSource": "react",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "plugins": [
       {
         "name": "next"
       }
-    ],
-    "paths": {
-      "@/*": ["./*"]
-    }
+    ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "components/AuthButton"],
-  "exclude": ["node_modules"]
+  "include": [
+    "**/*.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".eslintrc.cjs",
+    "functions/_middleware.js",
+    "prettier.config.cjs",
+    "public/scripts/*.js",
+    "src/**/**/*.astro",
+    "src/**/**/*.tsx",
+    "src/**/*.astro",
+    "src/**/*.js",
+    "tailwind.config.js",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": ["node_modules", "dist"]
 }

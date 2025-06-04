@@ -1,0 +1,37 @@
+{
+  "plugins": ["stylelint-order", "stylelint-scss"],
+  "extends": ["stylelint-config-standard", "stylelint-config-recommended-scss"],
+  "rules": {
+    "indentation": 2,
+    "string-quotes": "single",
+    "color-hex-case": "lower",
+    "order/order": [
+      [
+        "custom-properties",
+        "declarations",
+        {
+          "type": "at-rule",
+          "name": "supports",
+          "hasBlock": true
+        },
+        {
+          "type": "at-rule",
+          "name": "container",
+          "hasBlock": true
+        },
+        {
+          "type": "at-rule",
+          "name": "media",
+          "hasBlock": true
+        },
+        {
+          "type": "at-rule",
+          "name": "starting-style",
+          "hasBlock": true
+        },
+        "rules"
+      ],
+      { "unspecified": "bottom" }
+    ]
+  }
+}
