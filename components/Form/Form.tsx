@@ -100,6 +100,7 @@ const Form = () => {
 
   return (
     <div className={styles.formWrap}>
+      <h1>レシピ投稿</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.formInner}>
           <div className={styles.inputField}>

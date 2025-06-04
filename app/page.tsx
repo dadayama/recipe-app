@@ -8,7 +8,12 @@ const Home = async () => {
   }
   const data = await res.json();
 
-  return <RecipeList posts={data} />;
+  return (
+    <>
+      <h1 style={{ paddingInline: '24px' }}>わたしレシピ</h1>{' '}
+      <RecipeList posts={data} />
+    </>
+  );
 };
 
 export default Home;

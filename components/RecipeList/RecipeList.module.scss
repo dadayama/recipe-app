@@ -1,13 +1,16 @@
+.recipeWrap {
+  max-width: 1400px;
+  padding-block: 40px;
+  padding-inline: 24px;
+  @media screen and (width < 768px) {
+    padding-block: 24px;
+  }
+}
 .recipeList {
   display: grid;
-  gap: var(--spacing-2);
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: var(--spacing-3);
-  max-width: 1400px;
-  padding-inline: 24px;
-  padding-block: 80px;
+
+  margin-top: 40px;
   margin-inline: auto;
-  @media screen and (width < 768px) {
-    padding-block: 40px;
-  }
 }
