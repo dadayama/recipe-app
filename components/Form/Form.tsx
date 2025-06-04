@@ -1,6 +1,9 @@
 'use client';
 
-import { useState, ChangeEvent, FormEvent } from 'react';
+import { useState } from 'react';
+import { useForm, useFieldArray, SubmitHandler } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { useRouter } from 'next/navigation';
@@ -8,112 +11,134 @@ import { useRouter } from 'next/navigation';
 import styles from '@/components/Form/Form.module.scss';
 import { db, storage } from '@/lib/firebaseConfig';
 
+type FormValues = {
+  img: FileList;
+  title: string;
+  ingredients: string;
+  steps: { value: string }[];
+  comments?: string;
+};
+const schema: yup.ObjectSchema<FormValues> = yup.object({
+  img: yup
+    .mixed<FileList>()
+    .test('fileRequired', '画像を選択してください', (value) => {
+      return value instanceof FileList && value.length > 0;
+    })
+    .required(),
+  title: yup.string().required('レシピ名は必須です'),
+  ingredients: yup.string().required('材料は必須です'),
+  steps: yup
+    .array()
+    .of(
+      yup.object({
+        value: yup.string().required('手順は必須です'),
+      })
+    )
+    .min(1, '最低1つ手順が必要です')
+    .required(),
+  comments: yup.string().optional(),
+});
+
 const Form = () => {
   const [imgUrl, setImgUrl] = useState<string | null>(null);
-  const [recipes, setRecipes] = useState('');
-  const [ingredients, setIngredients] = useState('');
-  const [steps, setSteps] = useState<string[]>([]);
-  const [stepCount, setStepCount] = useState(3);
-  const [comments, setComments] = useState('');
   const router = useRouter();
 
-  const handleStepChange = (
-    e: ChangeEvent<HTMLTextAreaElement>,
-    index: number
-  ) => {
-    const newSteps = [...steps];
-    newSteps[index] = e.target.value;
-    setSteps(newSteps);
-  };
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm<FormValues>({
+    defaultValues: {
+      title: '',
+      ingredients: '',
+      steps: [{ value: '' }, { value: '' }, { value: '' }],
+      comments: '',
+    },
+    resolver: yupResolver(schema),
+  });
 
-  const onFileUpload = (e: ChangeEvent<HTMLInputElement>) => {
+  const { fields, append } = useFieldArray({
+    control,
+    name: 'steps',
+  });
+
+  const onFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file) return console.error('No file selected');
+    if (!file) return;
 
     const storageRef = ref(storage, `image/${file.name}`);
-    uploadBytes(storageRef, file)
-      .then(() => getDownloadURL(storageRef))
-      .then((url) => setImgUrl(url))
-      .catch((error) => console.error('File upload error:', error));
-  };
-
-  const handleAddStep = () => {
-    setStepCount((prev) => prev + 1);
-  };
-
-  const onSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-
     try {
-      const recipeRef = collection(db, 'recipes');
-      const docRef = await addDoc(recipeRef, {
-        slug: '',
-        img: imgUrl,
-        title: recipes,
-        ingredients,
-        steps,
-        comments,
-        createdAt: serverTimestamp(),
-      });
-      console.log('Document written with ID:', docRef.id);
-      router.push('/');
-      clearForm();
-    } catch (error) {
-      console.error('Error adding document:', error);
+      await uploadBytes(storageRef, file);
+      const url = await getDownloadURL(storageRef);
+      setImgUrl(url);
+    } catch (err) {
+      console.error('Upload error', err);
     }
   };
 
-  const clearForm = () => {
-    setRecipes('');
-    setIngredients('');
-    setSteps(Array(stepCount).fill(''));
-    setImgUrl(null);
-    setComments('');
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    try {
+      const recipeRef = collection(db, 'recipes');
+      await addDoc(recipeRef, {
+        slug: '',
+        img: imgUrl,
+        title: data.title,
+        ingredients: data.ingredients,
+        steps: data.steps.map((step) => step.value),
+        comments: data.comments,
+        createdAt: serverTimestamp(),
+      });
+      router.push('/');
+      reset();
+      setImgUrl(null);
+    } catch (err) {
+      console.error('Firestore add error', err);
+    }
   };
 
   return (
     <div className={styles.formWrap}>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.formInner}>
-          {/* 写真 */}
           <div className={styles.inputField}>
             <label htmlFor='img' className={styles.fieldTitle}>
               写真
             </label>
             <input
               type='file'
-              name='img'
               id='img'
               accept='.png, .jpeg, .jpg'
-              onChange={onFileUpload}
+              {...register('img')}
+              onChange={(e) => {
+                onFileUpload(e);
+                register('img').onChange(e);
+              }}
             />
+            {errors.img && <p className={styles.error}>{errors.img.message}</p>}
             {imgUrl && (
               <div className={styles.preview}>
-                <img
-                  src={imgUrl}
-                  alt='アップロードされた写真のプレビュー'
-                  width={300}
-                />
+                <img src={imgUrl} alt='プレビュー' width={300} />
               </div>
             )}
           </div>
 
-          {/* レシピ名 */}
           <div className={styles.inputField}>
-            <label htmlFor='recipe' className={styles.fieldTitle}>
+            <label htmlFor='title' className={styles.fieldTitle}>
               レシピ名
             </label>
             <input
               type='text'
-              id='recipe'
-              value={recipes}
-              onChange={(e) => setRecipes(e.target.value)}
-              autoComplete='off'
+              id='title'
+              {...register('title')}
               className={styles.w500}
             />
+            {errors.title && (
+              <p className={styles.error}>{errors.title.message}</p>
+            )}
           </div>
 
-          {/* 材料 */}
           <div className={styles.inputField}>
             <label htmlFor='ingredients' className={styles.fieldTitle}>
               材料
@@ -121,56 +146,60 @@ const Form = () => {
             <input
               type='text'
               id='ingredients'
-              value={ingredients}
-              onChange={(e) => setIngredients(e.target.value)}
-              autoComplete='off'
+              {...register('ingredients')}
               className={styles.w100}
             />
+            {errors.ingredients && (
+              <p className={styles.error}>{errors.ingredients.message}</p>
+            )}
           </div>
 
-          {/* 作り方 */}
           <div className={styles.inputField}>
             <div role='group' aria-labelledby='stepsLabel'>
               <p id='stepsLabel' className={styles.fieldTitle}>
                 作り方
               </p>
-              {[...Array(stepCount)].map((_, index) => (
-                <div className={styles.stepsContent} key={index}>
-                  <label htmlFor={`step-${index}`}>手順{index + 1}</label>
+              {fields.map((field, index) => (
+                <div className={styles.stepsContent} key={field.id}>
+                  <label htmlFor={`steps.${index}.value`}>
+                    手順{index + 1}
+                  </label>
                   <textarea
-                    id={`step-${index}`}
-                    value={steps[index] || ''}
-                    onChange={(e) => handleStepChange(e, index)}
+                    id={`steps.${index}.value`}
+                    {...register(`steps.${index}.value`)}
                     className={styles.w500}
                   />
+                  {errors.steps?.[index]?.value && (
+                    <p className={styles.error}>
+                      {errors.steps[index]?.value?.message}
+                    </p>
+                  )}
                 </div>
               ))}
             </div>
             <div className={styles.stepAddBtn}>
-              <button type='button' onClick={handleAddStep}>
+              <button type='button' onClick={() => append({ value: '' })}>
                 手順を増やす
               </button>
             </div>
           </div>
 
-          {/* コメント */}
           <div className={styles.inputField}>
-            <label htmlFor='comment' className={styles.fieldTitle}>
+            <label htmlFor='comments' className={styles.fieldTitle}>
               ひとことコメント
             </label>
             <input
               type='text'
-              id='comment'
-              value={comments}
-              onChange={(e) => setComments(e.target.value)}
-              autoComplete='off'
+              id='comments'
+              {...register('comments')}
               className={styles.w500}
             />
           </div>
 
-          {/* 追加ボタン */}
           <div className={styles.addButtonWrap}>
-            <button type='submit'>レシピを投稿する</button>
+            <button type='submit' disabled={isSubmitting}>
+              レシピを投稿する
+            </button>
           </div>
         </div>
       </form>
