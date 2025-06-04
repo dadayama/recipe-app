@@ -104,6 +104,7 @@ const Form = () => {
         <div className={styles.formInner}>
           <div className={styles.inputField}>
             <label htmlFor='img' className={styles.fieldTitle}>
+              <span>必須：</span>
               写真
             </label>
             <input
@@ -116,7 +117,11 @@ const Form = () => {
                 register('img').onChange(e);
               }}
             />
-            {errors.img && <p className={styles.error}>{errors.img.message}</p>}
+            {errors.img && (
+              <p className={styles.error} role='alert'>
+                {errors.img.message}
+              </p>
+            )}
             {imgUrl && (
               <div className={styles.preview}>
                 <img src={imgUrl} alt='プレビュー' width={300} />
@@ -126,6 +131,7 @@ const Form = () => {
 
           <div className={styles.inputField}>
             <label htmlFor='title' className={styles.fieldTitle}>
+              <span>必須：</span>
               レシピ名
             </label>
             <input
@@ -135,28 +141,34 @@ const Form = () => {
               className={styles.w500}
             />
             {errors.title && (
-              <p className={styles.error}>{errors.title.message}</p>
+              <p className={styles.error} role='alert'>
+                {errors.title.message}
+              </p>
             )}
           </div>
 
           <div className={styles.inputField}>
             <label htmlFor='ingredients' className={styles.fieldTitle}>
+              <span>必須：</span>
               材料
             </label>
             <input
               type='text'
               id='ingredients'
               {...register('ingredients')}
-              className={styles.w100}
+              className={styles.w500}
             />
             {errors.ingredients && (
-              <p className={styles.error}>{errors.ingredients.message}</p>
+              <p className={styles.error} role='alert'>
+                {errors.ingredients.message}
+              </p>
             )}
           </div>
 
           <div className={styles.inputField}>
             <div role='group' aria-labelledby='stepsLabel'>
               <p id='stepsLabel' className={styles.fieldTitle}>
+                <span>必須：</span>
                 作り方
               </p>
               {fields.map((field, index) => (
@@ -170,7 +182,7 @@ const Form = () => {
                     className={styles.w500}
                   />
                   {errors.steps?.[index]?.value && (
-                    <p className={styles.error}>
+                    <p className={styles.error} role='alert'>
                       {errors.steps[index]?.value?.message}
                     </p>
                   )}
