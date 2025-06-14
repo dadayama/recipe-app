@@ -1,4 +1,3 @@
-// components/Auth.tsx
 import { useState } from 'react';
 import {
   signInWithEmailAndPassword,
